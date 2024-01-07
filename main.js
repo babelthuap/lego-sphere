@@ -5,22 +5,19 @@ const r2 = r * r;
 const voxelWidth = 5;
 const voxelHeight = 3;
 
-const level = document.getElementById('level');
-const grid = document.getElementById('grid');
-
-function draw(level) {
-  const z = -r + (level + 0.5) * voxelHeight;
+function draw(layer) {
+  const z = -r + (layer + 0.5) * voxelHeight;
 
   grid.innerHTML = '';
   for (let row = 0; row < d / voxelWidth; row++) {
-    const y = -r + (row + 0.5)* voxelWidth;
+    const y = -r + (row + 0.5) * voxelWidth;
     const tr = document.createElement('tr');
     for (let col = 0; col < d / voxelWidth; col++) {
-      const x = -r + (col + 0.5)* voxelWidth;
+      const x = -r + (col + 0.5) * voxelWidth;
       const td = document.createElement('td');
-        td.style.backgroundColor = shade(x, y, z);
+      td.style.backgroundColor = shade(x, y, z);
       tr.appendChild(td);
-    } 
+    }
     grid.appendChild(tr);
   }
 }
@@ -44,7 +41,7 @@ function shade(x, y, z) {
     return 'grey';
   }
   return 'white';
-} 
+}
 
 
 level.addEventListener('input', () => draw(+level.value));
