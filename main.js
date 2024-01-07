@@ -1,4 +1,4 @@
-const d = 75;
+const d = 150;
 const r = d / 2;
 const r2 = r * r;
 
@@ -22,25 +22,21 @@ function draw(layer) {
   }
 }
 
-const offsets = [-1 / 3, 0, 1 / 3];
+const offsets = [-1 / 2, 1 / 2];
 function shade(x, y, z) {
   let hits = 0;
   for (let dx of offsets) {
     for (let dy of offsets) {
       for (let dz of offsets) {
         if ((x + dx) ** 2 + (y + dy) ** 2 + (z + dz) ** 2 < r2) {
-          hits++;
+          continue;
+        } else {
+          return 'white';
         }
       }
     }
   }
-  if (hits === 27) {
-    return 'black';
-  }
-  if (hits > 13) {
-    return 'grey';
-  }
-  return 'white';
+  return 'black';
 }
 
 
