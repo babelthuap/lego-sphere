@@ -6,6 +6,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sphere</title>
   <style>
+    input {
+      width: 100px;
+    }
+    #aspectRatioInput {
+      margin-right: 16px;
+      padding: 2px;
+    }
     td {
       width: 35px;
       height: 35px;
@@ -16,6 +23,10 @@
 
 <body>
   Diameter: <input type="number" id="diameterInput" value="20">
+  <select id="aspectRatioInput">
+    <option value="lego" selected>Lego</option>
+    <option value="cube">Cube</option>
+  </select>
   Level: <input type="number" id="layerInput" value="0">
   <table id="grid"></table>
   <script src="main.js"></script>
