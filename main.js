@@ -1,8 +1,10 @@
-const voxelWidth = 5;
-const voxelHeight = 3;
+const OFFSETS = [-1 / 2, -3 / 8, -1 / 4, -1 / 8, 0, 1 / 8, 1 / 4, 3 / 8, 1 / 2];
+const CUTOFF = (OFFSETS.length ** 3) / 2;
 
 function draw() {
   console.time('draw');
+
+  const [voxelWidth, voxelHeight] = getAspectRatio();
 
   const d = (+diameterInput.value) * voxelWidth;
   const r = d / 2;
@@ -24,32 +26,41 @@ function draw() {
     grid.appendChild(tr);
   }
 
-  console.timeEnd('draw');
-}
-
-const offsets = [-1 / 2, -3 / 8, -1 / 4, -1 / 8, 0, 1 / 8, 1 / 4, 3 / 8, 1 / 2];
-function shade(x, y, z, r2) {
-  let count = 0;
-  for (let dx of offsets) {
-    dx *= voxelWidth;
-    for (let dy of offsets) {
-      dy *= voxelWidth;
-      for (let dz of offsets) {
-        dz *= voxelHeight;
-        if ((x + dx) ** 2 + (y + dy) ** 2 + (z + dz) ** 2 <= r2) {
-          count++;
-          if (count > (offsets.length ** 3) / 2) {
-            return 'black';
+  function shade(x, y, z) {
+    let count = 0;
+    for (let dx of OFFSETS) {
+      dx *= voxelWidth;
+      for (let dy of OFFSETS) {
+        dy *= voxelWidth;
+        for (let dz of OFFSETS) {
+          dz *= voxelHeight;
+          if ((x + dx) ** 2 + (y + dy) ** 2 + (z + dz) ** 2 <= r2) {
+            count++;
+            if (count > CUTOFF) {
+              return 'black';
+            }
           }
         }
       }
     }
+    return 'white';
   }
-  return 'white';
+
+  console.timeEnd('draw');
 }
 
+// width x height
+function getAspectRatio() {
+  switch (aspectRatioInput.value) {
+    case 'lego':
+      return [5, 3];
+    case 'cube':
+      return [1, 1];
+  }
+}
 
 diameterInput.addEventListener('input', draw);
+aspectRatioInput.addEventListener('input', draw);
 layerInput.addEventListener('input', draw);
 
 draw();
